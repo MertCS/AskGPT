@@ -9,7 +9,9 @@ class TopBar extends React.Component {
         this.setState({
           isLoggedIn: false,
           userName: ""
-        });        
+        });
+        
+        
     };
 
     render() {
