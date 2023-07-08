@@ -24,7 +24,7 @@ public class AuthController {
 	UserRepository userRepository;
 
 	PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-	//test123
+	
 	@PostMapping("/api/1.0/auth")
 	@JsonView(Views.Base.class)
 	ResponseEntity<?> handleAuthentication(@RequestHeader(name="Authorization", required = false) String authorization) {
