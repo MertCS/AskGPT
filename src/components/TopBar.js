@@ -4,18 +4,10 @@ import {Link} from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 
 class TopBar extends React.Component {
-
-    logoutSuccess =() => {
-        this.setState({
-          isLoggedIn: false,
-          userName: ""
-        });
         
-        
-    };
 
     render() {
-        const{t, isLoggedIn, userName} = this.props;
+        const{t, isLoggedIn, userName, onLogoutSuccess} = this.props;
 
         let links = (
             <ul className="navbar-nav ms-auto">
@@ -39,7 +31,7 @@ class TopBar extends React.Component {
                     {userName}
                     </Link>           
                 </li> 
-                <li className='nav-link' onClick={this.logoutSuccess} style={{cursor: 'pointer'}}>
+                <li className='nav-link' onClick={onLogoutSuccess} style={{cursor: 'pointer'}}>
                     {t('Çıkış Yap')}
                 </li>             
             </ul>

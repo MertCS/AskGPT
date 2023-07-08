@@ -60,24 +60,29 @@ onClickLogIn = async event => {
         const {t, pendingApiCall} = this.props;
         
         return (
-            <div className='container'>
-                <form>
-                    <h1 className='text-center'>{t('Giriş Yap')}</h1>
-                    <Input label = {t("Kullanıcı Adı")} name = "username" onChange = {this.onChange}/><br/>
-                    <Input label = {t('Şifre')} name = "password" type = 'password' onChange = {this.onChange}/><br/>
-                    {error && <div class="alert alert-danger">
-                        {error}
-                    </div>}
-                    <div className='text-center'>
-                        <ButtonWithProgress
+            <div className="container d-flex justify-content-center align-items-center vh-100">
+              <div className="card p-4">
+                <div className="card-body">
+                  <h1 className="card-title text-center bg-dark text-white py-2 mb-4">{t('Giriş Yap')}</h1>
+                  <form>
+                    <Input label={t('Kullanıcı Adı')} name="username" onChange={this.onChange} />
+                    <br />
+                    <Input label={t('Şifre')} name="password" type="password" onChange={this.onChange} />
+                    <br />
+                    {error && <div className="alert alert-danger">{error}</div>}
+                    <div className="text-center">
+                      <ButtonWithProgress
                         onClick={this.onClickLogIn}
-                        pendingApiCall = {pendingApiCall}
+                        pendingApiCall={pendingApiCall}
                         disabled={!buttonEnabled || pendingApiCall}
-                        text = {(t('Giriş Yap'))}></ButtonWithProgress>
-                    </div>   
-                </form>
+                        text={t('Giriş Yap')}
+                      ></ButtonWithProgress>
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
-        );
+          );
     }
 }
 

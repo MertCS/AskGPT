@@ -19,7 +19,7 @@ function HomePage({ isLoggedIn, userName, t}) {
         > {t('Hemen Sohbet Etmeye Başla!')}
     </button>
       ) : (
-        <h1>Sign Up or Log In Now</h1>
+        <h1>{t('Giriş Yap veya hesabın yoksa kaydol!')}</h1>
       )}
     </div>
   );

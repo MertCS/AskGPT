@@ -22,6 +22,13 @@ class App extends React.Component {
     });
   };
 
+  onLogoutSuccess =() => {
+    this.setState({
+      isLoggedIn: false,
+      userName: undefined
+    });
+  }
+
   render(){
 
     const{isLoggedIn,userName} = this.state;
@@ -29,13 +36,13 @@ class App extends React.Component {
     return (
       <div>
         <Router>
-          <TopBar userName = {userName} isLoggedIn = {isLoggedIn}/>
+          <TopBar userName = {userName} isLoggedIn = {isLoggedIn} onLogoutSuccess = {this.onLogoutSuccess}/>
           <Switch>
           <Route exact path="/">
           <HomePage isLoggedIn={isLoggedIn} userName={userName} t={t}/>
           </Route>
             {!isLoggedIn && <Route path ="/login" component = {(props) => {
-              return <LogInPage {...props} onLoginSuccess = {this.onLoginSuccess} logoutSuccess = {this.logoutSuccess}/>
+              return <LogInPage {...props} onLoginSuccess = {this.onLoginSuccess} onLogoutSuccess = {this.onLogoutSuccess}/>
             }}/>}
             <Route path ="/signup" component = {SignUpPage}/>
             <Route path ="/user/:username" component = {UserPage}/>
