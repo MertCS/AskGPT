@@ -38,7 +38,7 @@ public class AuthController {
 		String[] parts = decoded.split(":");
 		String username = parts[0];
 		String password = parts[1];
-		User inDB = userRepository.findByUserName(username);
+		User inDB = userRepository.findByUsername(username);
 		if(inDB == null) {
 			ApiError error = new ApiError(401, "Unauthorized Request", "/api/1.0/auth");
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);

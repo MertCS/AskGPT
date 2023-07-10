@@ -51,10 +51,10 @@ public class User {
 	
 	//@NotBlank(message = "{chatbot.constraint.username.NotNull.message}")
 	//@Size(min = 4, max = 255, message = "{chatbot.constraint.username.Size.message}")
-	@Column(name = "userName")
+	@Column(name = "username")
 	@UniqueUsername(message = "{chatbot.constraint.username.UniqueUsername.message}")
 	@JsonView(Views.Base.class)
-	private String userName;
+	private String username;
 	
 	//@NotBlank(message = "{chatbot.constraint.pass.NotNull.message}")
 	//@Size(min = 8, max = 255, message = "{chatbot.constraint.pass.Size.message}")
