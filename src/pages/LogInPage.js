@@ -4,8 +4,11 @@ import {withTranslation} from 'react-i18next';
 import { login } from '../api/apiCalls';
 import ButtonWithProgress from '../components/ButtonWithProgress';
 import { withApiProgress } from '../shared/ApiProgress';
+import { Authentication } from '../shared/AuthenticationContext';
 
 class LogInPage extends Component {
+
+    static contextType = Authentication;
 
     state = {
         username:null,
@@ -24,7 +27,7 @@ onChange = event => {
 
 onClickLogIn = async event => {
     const errorMessage = this.props.t('Kullanici adi veya şifre hatalı');
-    const {onLoginSuccess} = this.props;
+    const {onLoginSuccess} = this.context;
     event.preventDefault();
     const { username, password } = this.state;
 
@@ -41,9 +44,15 @@ onClickLogIn = async event => {
     });
     // todo valid check
     try{
-        await login(creds);
+        const response = await login(creds);
         push('/');
-        onLoginSuccess(username);
+
+    const authState = {
+      ...response.data,
+      password
+    };
+
+        onLoginSuccess(authState);
     }catch (apiError){
         this.setState({
             error: errorMessage

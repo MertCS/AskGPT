@@ -12,7 +12,7 @@ state = {
     email: "",
     name: "",
     surname: "",
-    userName: "",
+    username: "",
     pass: "",
     passCheck: "",
     agreed: false,
@@ -42,16 +42,16 @@ onChange = event => {
     const passStrong = this.validatePassword();
 
 
-    if(name == 'pass' || name == 'passCheck'){
-        if(name == 'pass' && value != this.state.passCheck){
+    if(name === 'pass' || name === 'passCheck'){
+        if(name === 'pass' && value !== this.state.passCheck){
             errors.passCheck = t('Şifreler aynı olmalı');
-        } else if(name == 'passCheck' && value != this.state.pass){
+        } else if(name === 'passCheck' && value !== this.state.pass){
             errors.passCheck = t('Şifreler aynı olmalı');
         } else{
             errors.passCheck = undefined;
         }
     }
-    if(name == 'email'){
+    if(name === 'email'){
         if(!isEmailValid){
             errors.email = t('Geçersiz e-posta');
         }
@@ -59,7 +59,7 @@ onChange = event => {
             errors.email = undefined;
         }
     };
-    if(this.state.name && name == 'name'){
+    if(this.state.name && name === 'name'){
         if(this.state.name.length <= 1 || this.state.name.length >= 255){
             errors.name = t('İsim uzunluğu 1 ile 255 karakter arasında olmalıdır');
         }
@@ -68,15 +68,15 @@ onChange = event => {
         }
     };
 
-    if (name === 'userName') {
+    if (name === 'username') {
         if (value.length < 4 || value.length >= 255) {
-          errors.userName = t('Kullanıcı adı uzunluğu 4 ile 255 karakter arasında olmalıdır');
+          errors.username = t('Kullanıcı adı uzunluğu 4 ile 255 karakter arasında olmalıdır');
         } else {
-          errors.userName = value.length === 4 ? undefined : errors.userName;
+          errors.username = value.length === 4 ? undefined : errors.username;
         }
       }
 
-    if(this.state.surname && name == 'surname'){
+    if(this.state.surname && name === 'surname'){
         if(this.state.surname.length <= 1 || this.state.surname.length >= 255){
             errors.surname = t('İsim uzunluğu 1 ile 255 karakter arasında olmalıdır');
         }
@@ -108,13 +108,13 @@ onClickSignup = async event => {
     const{push} = this.props.history;
 
     event.preventDefault();
-    const {email, name, surname, userName, pass} = this.state;
+    const {email, name, surname, username, pass} = this.state;
 
     const body ={
         email,
         name,
         surname,
-        userName,
+        username,
         pass
     };
 
@@ -135,7 +135,7 @@ render(){
 
     const {t, pendingApiCall} = this.props;
     const{ errors, signUpSuccess } = this.state;
-    const {email, name, surname, userName, pass, passCheck} = errors
+    const {email, name, surname, username, pass, passCheck} = errors
 
     return (
         <div className="container d-flex justify-content-center align-items-center vh-100">
@@ -157,7 +157,7 @@ render(){
                 <br />
                 <Input name="name" label={t('İsim')} error={name} onChange={this.onChange} type='text' />
                 <Input name="surname" label={t("Soyisim")} error={surname} onChange={this.onChange} type='text' /> <br />
-                <Input name="userName" label={t("Kullanıcı Adı")} error={userName} onChange={this.onChange} type='text' /><br />
+                <Input name="username" label={t("Kullanıcı Adı")} error={username} onChange={this.onChange} type='text' /><br />
                 <Input name="pass" label={t("Şifre")} error={pass} onChange={this.onChange} type='password' />
                 <Input name="passCheck" label={t("Şifre Yeniden")} error={passCheck} onChange={this.onChange} type='password' /><br />
                 {signUpSuccess && <div className="alert alert-success">
@@ -174,7 +174,7 @@ render(){
                 <div className="text-center">
                   <ButtonWithProgress
                     className="btn btn-primary"
-                    disabled={!this.state.agreed || pendingApiCall || passCheck !== undefined || email !== undefined || userName !== undefined || name !== undefined || surname !== undefined || pass !== undefined}
+                    disabled={!this.state.agreed || pendingApiCall || passCheck !== undefined || email !== undefined || username !== undefined || name !== undefined || surname !== undefined || pass !== undefined}
                     onClick={this.onClickSignup}
                     pendingApiCall={pendingApiCall}
                     text={t('Kayıt Ol')}

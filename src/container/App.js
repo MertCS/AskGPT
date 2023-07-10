@@ -7,49 +7,31 @@ import UserPage from "../pages/UserPage";
 import {HashRouter as Router, Route, Redirect, Switch} from "react-router-dom";
 import TopBar from "../components/TopBar";
 import { t } from "i18next";
+import ChatPage from "../pages/ChatPage";
+import { Authentication } from "../shared/AuthenticationContext";
 
 class App extends React.Component {
-
-  state = {
-    isLoggedIn: false,
-    userName: undefined
-  };
-
-  onLoginSuccess =(userName) => {
-    this.setState({
-      userName : userName,
-      isLoggedIn: true
-    });
-  };
-
-  onLogoutSuccess =() => {
-    this.setState({
-      isLoggedIn: false,
-      userName: undefined
-    });
-  }
-
+  static contextType = Authentication;
   render(){
 
-    const{isLoggedIn,userName} = this.state;
+    const isLoggedIn = this.context.state.isLoggedIn;
 
     return (
       <div>
         <Router>
-          <TopBar userName = {userName} isLoggedIn = {isLoggedIn} onLogoutSuccess = {this.onLogoutSuccess}/>
+          <TopBar/>
+          <LanguageSelector/>
           <Switch>
           <Route exact path="/">
-          <HomePage isLoggedIn={isLoggedIn} userName={userName} t={t}/>
+          <HomePage/>
           </Route>
-            {!isLoggedIn && <Route path ="/login" component = {(props) => {
-              return <LogInPage {...props} onLoginSuccess = {this.onLoginSuccess} onLogoutSuccess = {this.onLogoutSuccess}/>
-            }}/>}
+            {!isLoggedIn && <Route path ="/login" component = {LogInPage}/>}
             <Route path ="/signup" component = {SignUpPage}/>
             <Route path ="/user/:username" component = {UserPage}/>
+            <Route path ="/chat/:username" component={ChatPage} t = {t}/>
             <Redirect to="/"/>
           </Switch>
         </Router>
-        <LanguageSelector/>
       </div>
     );
   }
