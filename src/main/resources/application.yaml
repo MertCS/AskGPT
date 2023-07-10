@@ -1,7 +1,8 @@
 spring:
   datasource:
-    url: jdbc:h2:./devdb
-    username: sa
+    url: jdbc:mysql://localhost:3306/askgpt
+    username: root
+    password: 12345
   jpa:
     hibernate:
       ddl-auto: update
@@ -10,4 +11,4 @@ spring:
        persistence:
         validation:
          mode: none
-      
+    show-sql: true
