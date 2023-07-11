@@ -1,16 +1,15 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
-import { Authentication } from '../shared/AuthenticationContext';
+import {connect} from 'react-redux';
+//import { Authentication } from '../shared/AuthenticationContext';
 
 class HomePage extends React.Component {
 
-  static contextType = Authentication;
+  //static contextType = Authentication;
 
   render() {
-    const{t} = this.props;
-    const{state} = this.context;
-    const{isLoggedIn, username} = state;
+    const{t, username, isLoggedIn} = this.props;
 
     const handleButtonClick = () => {
 
@@ -35,5 +34,12 @@ class HomePage extends React.Component {
   }
 }
 
-export default withTranslation()(withRouter(HomePage));
+const mapStateToProps = (store) => {
+  return {
+      isLoggedIn: store.isLoggedIn,
+      username: store.username
+  };
+};
+
+export default connect(mapStateToProps)(withTranslation()(withRouter(HomePage)));
 

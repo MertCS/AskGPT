@@ -1,100 +1,73 @@
-import React, { Component } from 'react';
+import React, {useEffect, useState}from 'react';
 import Input from '../components/Input';
 import {withTranslation} from 'react-i18next';
-import { login } from '../api/apiCalls';
 import ButtonWithProgress from '../components/ButtonWithProgress';
 import { withApiProgress } from '../shared/ApiProgress';
-import { Authentication } from '../shared/AuthenticationContext';
+import {connect} from 'react-redux';
+import { loginHandler } from '../redux/authActions';
 
-class LogInPage extends Component {
+const LogInPage = (props) => {
 
-    static contextType = Authentication;
+    const [username, setUsername] = useState();
+    const [password, setPassword] = useState();
+    const [error, setError] = useState();
 
-    state = {
-        username:null,
-        password:null,
-        error: null,
-    }; 
+    useEffect(() => {
+      setError(undefined);
+    }, [username, password])
 
-onChange = event => {
-    const {name, value} = event.target;
-    this.setState({
-        [name]: value,
-        error: null
-    });
-    // todo valid check
-}
+const onClickLogIn = async event => {
+    const errorMessage = props.t('Kullanici adi veya şifre hatalı');
 
-onClickLogIn = async event => {
-    const errorMessage = this.props.t('Kullanici adi veya şifre hatalı');
-    const {onLoginSuccess} = this.context;
     event.preventDefault();
-    const { username, password } = this.state;
-
     const creds = {
         username,
         password
     
     };
 
-    const{push} = this.props.history;
+    const {history, dispatch} = props;
+    const{push} = history;
 
-    this.setState({
-        error:null
-    });
-    // todo valid check
+    setError(undefined);
+
     try{
-        const response = await login(creds);
-        push('/');
-
-    const authState = {
-      ...response.data,
-      password
+      await dispatch(loginHandler(creds));
+    push('/');
+    }catch (apiError){
+        setError(errorMessage);
     };
 
-        onLoginSuccess(authState);
-    }catch (apiError){
-        this.setState({
-            error: errorMessage
-            //apiError.response.data.message
-        });
-    }
+};
+const buttonEnabled = username && password;
+const {t, pendingApiCall} = props;
 
-}
-
-    render() {
-
-        const {username, password, error} = this.state;
-        const buttonEnabled = username && password;
-        const {t, pendingApiCall} = this.props;
-        
-        return (
-            <div className="container d-flex justify-content-center align-items-center vh-100">
-              <div className="card p-4">
-                <div className="card-body">
-                  <h1 className="card-title text-center bg-dark text-white py-2 mb-4">{t('Giriş Yap')}</h1>
-                  <form>
-                    <Input label={t('Kullanıcı Adı')} name="username" onChange={this.onChange} />
-                    <br />
-                    <Input label={t('Şifre')} name="password" type="password" onChange={this.onChange} />
-                    <br />
-                    {error && <div className="alert alert-danger">{error}</div>}
-                    <div className="text-center">
-                      <ButtonWithProgress
-                        onClick={this.onClickLogIn}
-                        pendingApiCall={pendingApiCall}
-                        disabled={!buttonEnabled || pendingApiCall}
-                        text={t('Giriş Yap')}
-                      ></ButtonWithProgress>
-                    </div>
-                  </form>
-                </div>
-              </div>
+return (
+    <div className="container d-flex justify-content-center align-items-center vh-100">
+      <div className="card p-4">
+        <div className="card-body">
+          <h1 className="card-title text-center bg-dark text-white py-2 mb-4">{t('Giriş Yap')}</h1>
+          <form>
+            <Input label={t('Kullanıcı Adı')} onChange={(event) => {setUsername(event.target.value)}} />
+            <br />
+            <Input label={t('Şifre')} type="password" onChange={(event) => {setPassword(event.target.value)}}/>
+            <br />
+            {error && <div className="alert alert-danger">{error}</div>}
+            <div className="text-center">
+              <ButtonWithProgress
+                onClick={onClickLogIn}
+                pendingApiCall={pendingApiCall}
+                disabled={!buttonEnabled || pendingApiCall}
+                text={t('Giriş Yap')}
+              ></ButtonWithProgress>
             </div>
-          );
-    }
+          </form>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 const LogInPageWithTranslation = withTranslation()(LogInPage);
 
-export default withApiProgress(LogInPageWithTranslation, '/api/1.0/auth');
+export default connect()(withApiProgress(LogInPageWithTranslation, '/api/1.0/auth'));
