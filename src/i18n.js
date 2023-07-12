@@ -25,7 +25,9 @@ i18n.use(initReactI18next).init({
                 'İsim uzunluğu 1 ile 255 karakter arasında olmalıdır' : 'Name size must be between 1 and 255 characters',
                 'Şifre uzunluğu 8 ile 255 karakter arasında olmalıdır ve en az 1 büyük harf ve bir rakam içermedilir' : 'Password size must be between 8 and 255 characters and must include at least 1 number and at least 1 capital letter',
                 'Kullanıcı adı uzunluğu 4 ile 255 karakter arasında olmalıdır' : 'User name size must be between 4 and 255 characters',
-                'Gönder' : 'Send'
+                'Gönder' : 'Send',
+                'Kullanıcı Bulunamadı' : 'User not found',
+                'Yükleniyor...' : 'Loading...'
             }
         },
         tr: {
@@ -50,7 +52,9 @@ i18n.use(initReactI18next).init({
                 'İsim uzunluğu 1 ile 255 karakter arasında olmalıdır' : 'İsim uzunluğu 1 ile 255 karakter arasında olmalıdır',
                 'Şifre uzunluğu 8 ile 255 karakter arasında olmalıdır ve en az 1 büyük harf ve bir rakam içermedilir' : 'Şifre uzunluğu 8 ile 255 karakter arasında olmalıdır ve en az 1 büyük harf ve bir rakam içermedilir',
                 'Kullanıcı adı uzunluğu 4 ile 255 karakter arasında olmalıdır' : 'Kullanıcı adı uzunluğu 4 ile 255 karakter arasında olmalıdır',
-                'Gönder' : 'Gönder'
+                'Gönder' : 'Gönder',
+                'Kullanıcı Bulunamadı' : 'Kullanıcı Bulunamadı',
+                'Yükleniyor...' : 'Yükleniyor...'
             }
         }
     },

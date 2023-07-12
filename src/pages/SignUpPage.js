@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import Input from "../components/Input";
-import {withTranslation} from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import ButtonWithProgress from "../components/ButtonWithProgress";
-import { withApiProgress } from "../shared/ApiProgress";
+import { useApiProgress } from "../shared/ApiProgress";
 import validator from 'validator';
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { signUpHandler } from "../redux/authActions";
 
 const SignUpPage = (props) =>{
@@ -18,6 +18,7 @@ const SignUpPage = (props) =>{
     passCheck: ""
   })
   const [errors,setErrors] = useState({});
+  const dispatch = useDispatch();
 
 const validatePassword = () => {
     const passwordArray = Array.from(form.password);
@@ -31,7 +32,6 @@ const validateEmail = () => {
   };
 
 const onChange = event => {
-    const {t} = props;
     const {name, value} = event.target;
     const errorsCopy = {...errors};
     errorsCopy[name] = undefined;
@@ -39,15 +39,15 @@ const onChange = event => {
     const passStrong = validatePassword();
 
 
-    if(name === 'password' || name === 'passCheck'){
-        if(name === 'password' && value !== form.passCheck){
-          errorsCopy.passCheck = t('Şifreler aynı olmalı');
-        } else if(name === 'passCheck' && value !== form.password){
-          errorsCopy.passCheck = t('Şifreler aynı olmalı');
-        } else{
-          errorsCopy.passCheck = undefined;
-        }
-    }
+    // if(name === 'password' || name === 'passCheck'){
+    //     if(name === 'password' && value !== form.passCheck){
+    //       errorsCopy.passCheck = t('Şifreler aynı olmalı');
+    //     } else if(name === 'passCheck' && value !== form.password){
+    //       errorsCopy.passCheck = t('Şifreler aynı olmalı');
+    //     } else{
+    //       errorsCopy.passCheck = undefined;
+    //     }
+    // }
     if(name === 'email'){
         if(!isEmailValid){
           errorsCopy.email = t('Geçersiz e-posta');
@@ -102,7 +102,7 @@ const onChange = event => {
 };
 
 const onClickSignup = async event => {
-    const {history, dispatch} = props;
+    const {history} = props;
     const{push} = history;
 
     event.preventDefault();
@@ -126,59 +126,75 @@ const onClickSignup = async event => {
     };
 };
 
-const {t, pendingApiCall} = props;
-const {email : emailError, name : nameError, surname : surnameError, username : usernameError, password : passwordError, passCheck : passCheckError} = errors
+const {t} = useTranslation();
+const pendingApiCallSignup = useApiProgress('/api/1.0/users');
+const pendingApiCallLogin = useApiProgress('/api/1.0/auth');
+
+const pendingApiCall = pendingApiCallLogin || pendingApiCallSignup;
+
+const {email : emailError, name : nameError, surname : surnameError, username : usernameError, password : passwordError} = errors
 
 
-let passwordRepeatError; //Implement
+let passCheckError; //Implement
 if(form.password !== form.passCheck){
-  passwordRepeatError = t('Şifreler aynı olmalı');
+  passCheckError = t('Şifreler aynı olmalı');
 }
 
 return (
-    <div className="container d-flex justify-content-center align-items-center vh-100">
-      <div className="card p-4">
-        <div className="card-body">
-          <form>
-            <h1 className="card-title text-center bg-dark text-white py-2 mb-4">{t('Kayıt Ol')}</h1>
-            <div className="form-group">
-              <label>{t('E-posta')} </label>
-              <input
-                className={form.email ? "form-control is-invalid" : "form-control"}
-                name='email'
-                type='email'
-                onChange={onChange}
-              />
-              <small id="emailHelp" className="form-text text-muted">{t('E-postanız kimseyle paylaşılmayacaktır.')}</small>
-              <div className="invalid-feedback">{emailError}</div>
-            </div>
-            <br />
-            <Input name="name" label={t('İsim')} error={nameError} onChange={onChange} type='text' />
-            <Input name="surname" label={t("Soyisim")} error={surnameError} onChange={onChange} type='text' /> <br />
-            <Input name="username" label={t("Kullanıcı Adı")} error={usernameError} onChange={onChange} type='text' /><br />
-            <Input name="password" label={t("Şifre")} error={passwordError} onChange={onChange} type='password' />
-            <Input name="passCheck" label={t("Şifre Yeniden")} error={passCheckError} onChange={onChange} type='password' /><br />
-            <br />
-            <div className="text-center">
-              <ButtonWithProgress
-                className="btn btn-primary"
-                disabled={pendingApiCall || passCheckError !== undefined || emailError !== undefined || usernameError !== undefined || nameError !== undefined || surnameError !== undefined || passwordError !== undefined}
-                onClick={onClickSignup}
-                pendingApiCall={pendingApiCall}
-                text={t('Kayıt Ol')}
-              ></ButtonWithProgress>
-            </div>
-          </form>
-        </div>
-      </div>
+  <div className="container d-flex justify-content-center align-items-center vh-100">
+  <div className="card text-center">
+    <div className="card-header">
+      <h1 className="m-0">{t('Kayıt Ol')}</h1>
     </div>
+    <div className="card-body pt-0">
+      <form>
+        <div className="form-group">
+          <label>{t('E-posta')}</label>
+          <input
+            className={form.email ? "form-control is-invalid" : "form-control"}
+            name="email"
+            type="email"
+            onChange={onChange}
+          />
+          <small id="emailHelp" className="form-text text-muted">
+            {t('E-postanız kimseyle paylaşılmayacaktır.')}
+          </small>
+          <div className="invalid-feedback">{emailError}</div>
+        </div>
+        <br />
+        <Input name="name" label={t('İsim')} error={nameError} onChange={onChange} type="text" />
+        <Input name="surname" label={t("Soyisim")} error={surnameError} onChange={onChange} type="text" />
+        <br />
+        <Input name="username" label={t("Kullanıcı Adı")} error={usernameError} onChange={onChange} type="text" />
+        <br />
+        <Input name="password" label={t("Şifre")} error={passwordError} onChange={onChange} type="password" />
+        <Input name="passCheck" label={t("Şifre Yeniden")} error={passCheckError} onChange={onChange} type="password" />
+        <br />
+        <br />
+        <div className="text-center">
+          <ButtonWithProgress
+            className="btn btn-primary"
+            disabled={
+              pendingApiCall ||
+              passCheckError !== undefined ||
+              emailError !== undefined ||
+              usernameError !== undefined ||
+              nameError !== undefined ||
+              surnameError !== undefined ||
+              passwordError !== undefined
+            }
+            onClick={onClickSignup}
+            pendingApiCall={pendingApiCall}
+            text={t('Kayıt Ol')}
+          ></ButtonWithProgress>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
   );
 }
 
-
-const SignUpPageWithApiProgressForSignupRequest = withApiProgress(SignUpPage, '/api/1.0/users');
-const SignUpPageWithApiProgressForAuthRequest = withApiProgress(SignUpPageWithApiProgressForSignupRequest, '/api/1.0/auth')
-
-const SignUpPageWithTranslation = withTranslation()(SignUpPageWithApiProgressForAuthRequest);
-
-export default connect()(SignUpPageWithTranslation);
+export default SignUpPage;

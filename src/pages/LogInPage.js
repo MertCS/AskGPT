@@ -1,9 +1,9 @@
 import React, {useEffect, useState}from 'react';
 import Input from '../components/Input';
-import {withTranslation} from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import ButtonWithProgress from '../components/ButtonWithProgress';
-import { withApiProgress } from '../shared/ApiProgress';
-import {connect} from 'react-redux';
+import { useApiProgress } from '../shared/ApiProgress';
+import {useDispatch} from 'react-redux';
 import { loginHandler } from '../redux/authActions';
 
 const LogInPage = (props) => {
@@ -11,13 +11,15 @@ const LogInPage = (props) => {
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
     const [error, setError] = useState();
+    const dispatch = useDispatch();
+    const {t} = useTranslation();
 
     useEffect(() => {
       setError(undefined);
     }, [username, password])
 
 const onClickLogIn = async event => {
-    const errorMessage = props.t('Kullanici adi veya şifre hatalı');
+    const errorMessage = t('Kullanici adi veya şifre hatalı');
 
     event.preventDefault();
     const creds = {
@@ -26,7 +28,7 @@ const onClickLogIn = async event => {
     
     };
 
-    const {history, dispatch} = props;
+    const {history} = props;
     const{push} = history;
 
     setError(undefined);
@@ -40,34 +42,34 @@ const onClickLogIn = async event => {
 
 };
 const buttonEnabled = username && password;
-const {t, pendingApiCall} = props;
+const pendingApiCall = useApiProgress('/api/1.0/auth')
 
 return (
-    <div className="container d-flex justify-content-center align-items-center vh-100">
-      <div className="card p-4">
-        <div className="card-body">
-          <h1 className="card-title text-center bg-dark text-white py-2 mb-4">{t('Giriş Yap')}</h1>
-          <form>
-            <Input label={t('Kullanıcı Adı')} onChange={(event) => {setUsername(event.target.value)}} />
-            <br />
-            <Input label={t('Şifre')} type="password" onChange={(event) => {setPassword(event.target.value)}}/>
-            <br />
-            {error && <div className="alert alert-danger">{error}</div>}
-            <div className="text-center">
-              <ButtonWithProgress
-                onClick={onClickLogIn}
-                pendingApiCall={pendingApiCall}
-                disabled={!buttonEnabled || pendingApiCall}
-                text={t('Giriş Yap')}
-              ></ButtonWithProgress>
-            </div>
-          </form>
-        </div>
-      </div>
+  <div className="container d-flex justify-content-center align-items-center">
+  <div className="card text-center">
+    <div className="card-header">
+      <h1 className="m-0">{t('Giriş Yap')}</h1>
     </div>
+    <div className="card-body">
+      <form>
+        <Input label={t('Kullanıcı Adı')} onChange={(event) => setUsername(event.target.value)} />
+        <br />
+        <Input label={t('Şifre')} type="password" onChange={(event) => setPassword(event.target.value)} />
+        <br />
+        {error && <div className="alert alert-danger">{error}</div>}
+        <div className="text-center">
+          <ButtonWithProgress
+            onClick={onClickLogIn}
+            pendingApiCall={pendingApiCall}
+            disabled={!buttonEnabled || pendingApiCall}
+            text={t('Giriş Yap')}
+          ></ButtonWithProgress>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
   );
 }
 
-const LogInPageWithTranslation = withTranslation()(LogInPage);
-
-export default connect()(withApiProgress(LogInPageWithTranslation, '/api/1.0/auth'));
+export default LogInPage;
