@@ -10,7 +10,7 @@ import com.chatbot.webs.user.UserService;
 
 import org.springframework.boot.CommandLineRunner;
 
-@SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
+@SpringBootApplication
 public class WebsApplication {
 
 	public static void main(String[] args) {
