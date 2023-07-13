@@ -2,6 +2,7 @@ package com.chatbot.webs.user;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +13,20 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.chatbot.webs.error.ApiError;
+import com.chatbot.webs.shared.CurrentUser;
 import com.chatbot.webs.shared.GenericResponse;
-import com.chatbot.webs.shared.Views;
+import com.chatbot.webs.user.vm.UserVM;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import jakarta.validation.Valid;
@@ -40,15 +47,20 @@ public class UserController {
 		return new GenericResponse("Yeni kullanıcı oluşturuldu");
 	}
 	
-//	@GetMapping("/api/1.0/users")
-//	@JsonView(Views.Base.class)
-//	List<User> getUsers(){
-//		return userService.getUsers();
-//	}
+	@GetMapping("/users")
+	Page<UserVM> getUsers(Pageable page, @CurrentUser User user){
+		return userService.getUsers(page, user).map(UserVM::new);
+	}
 	
 	@GetMapping("/users/{username}")
-	User getUser(@PathVariable String username) {
+	UserVM getUser(@PathVariable String username) {
 		User user = userService.getByUsername(username);
-		return user;
+		return new UserVM(user);
+	}
+	
+	@PutMapping("/users/{username}")
+	UserVM updateUser(@RequestBody UserUpdateVM updatedUser, @PathVariable String username) {
+		User user = userService.updateUser(username, updatedUser);
+		return new UserVM(user);
 	}
 }

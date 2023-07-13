@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.chatbot.webs.error.ApiError;
 import com.chatbot.webs.shared.CurrentUser;
-import com.chatbot.webs.shared.Views;
 import com.chatbot.webs.user.User;
 import com.chatbot.webs.user.UserRepository;
+import com.chatbot.webs.user.vm.UserVM;
 import com.fasterxml.jackson.annotation.JsonView;
 
 @RestController
@@ -30,8 +30,8 @@ public class AuthController {
 	UserRepository userRepository;
 
 	@PostMapping("/api/1.0/auth")
-	@JsonView(Views.Base.class)
-	ResponseEntity<?> handleAuthentication(@CurrentUser User user) {
-		return ResponseEntity.ok(user);
+
+	UserVM handleAuthentication(@CurrentUser User user) {
+		return new UserVM(user);
 	}
 }

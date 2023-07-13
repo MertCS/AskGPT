@@ -7,7 +7,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.chatbot.webs.shared.Views;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import jakarta.persistence.Column;
@@ -45,36 +44,30 @@ public class User implements UserDetails{
 	//@Email(message = "{chatbot.constraint.email.Email.message}")
 	@Column
 	@UniqueEmail(message = "{chatbot.constraint.email.UniqueEmail.message}")
-	@JsonView(Views.Base.class)
 	private String email;
 	
 //	@NotBlank(message = "{chatbot.constraint.name.NotNull.message}")
 //	@Size(min = 1, max = 255, message = "{chatbot.constraint.name.Size.message}")
 	@Column
-	@JsonView(Views.Base.class)
 	private String name;
 	
 //	@NotBlank(message = "{chatbot.constraint.surname.NotNull.message}")
 //	@Size(min = 1, max = 255, message = "{chatbot.constraint.surname.Size.message}")
 	@Column
-	@JsonView(Views.Base.class)
 	private String surname;
 	
 	//@NotBlank(message = "{chatbot.constraint.username.NotNull.message}")
 	//@Size(min = 4, max = 255, message = "{chatbot.constraint.username.Size.message}")
 	@Column(name = "username")
 	@UniqueUsername(message = "{chatbot.constraint.username.UniqueUsername.message}")
-	@JsonView(Views.Base.class)
 	private String username;
 	
 	//@NotBlank(message = "{chatbot.constraint.password.NotNull.message}")
 	//@Size(min = 8, max = 255, message = "{chatbot.constraint.password.Size.message}")
 	@Column
 	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$", message = "{chatbot.constraint.password.Pattern.message}")
-	@JsonView(Views.Sensitive.class)
 	private String password;
 	
-	@JsonView(Views.Base.class)
 	private String image;
 
 	@Override
