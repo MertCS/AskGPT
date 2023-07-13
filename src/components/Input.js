@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Input = (props) => {
-    const {label, error, name, onChange, type } = props
+    const {label, error, name, onChange, type, defaultValue } = props
     const className = error ? "form-control is-invalid" : "form-control"
     return(
         <div className="form-group">
@@ -10,7 +10,8 @@ const Input = (props) => {
             className={className} 
             name = {name}
             onChange={onChange}
-            type = {type} ></input>
+            type = {type} 
+            defaultValue={defaultValue}></input>
             <div className="invalid-feedback">{error}</div>
         </div> 
     )

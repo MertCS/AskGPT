@@ -27,7 +27,14 @@ i18n.use(initReactI18next).init({
                 'Kullanıcı adı uzunluğu 4 ile 255 karakter arasında olmalıdır' : 'User name size must be between 4 and 255 characters',
                 'Gönder' : 'Send',
                 'Kullanıcı Bulunamadı' : 'User not found',
-                'Yükleniyor...' : 'Loading...'
+                'Yükleniyor...' : 'Loading...',
+                'Diğer Kullanıcılar' : 'Users',
+                'Sonraki >>' : 'Next >>',
+                '<< Önceki' : '<< Previous',
+                'Yükleme başarısız' : 'Load failed',
+                'Profili Güncelle' : 'Edit Profile',
+                'Kaydet': 'Save',
+                'İptal' : 'Cancel'
             }
         },
         tr: {
@@ -54,7 +61,14 @@ i18n.use(initReactI18next).init({
                 'Kullanıcı adı uzunluğu 4 ile 255 karakter arasında olmalıdır' : 'Kullanıcı adı uzunluğu 4 ile 255 karakter arasında olmalıdır',
                 'Gönder' : 'Gönder',
                 'Kullanıcı Bulunamadı' : 'Kullanıcı Bulunamadı',
-                'Yükleniyor...' : 'Yükleniyor...'
+                'Yükleniyor...' : 'Yükleniyor...',
+                'Diğer Kullanıcılar' : 'Diğer Kullanıcılar',
+                'Sonraki >>' : 'Sonraki >>',
+                '<< Önceki' : '<< Önceki',
+                'Yükleme başarısız' : 'Yükleme başarısız',
+                'Profili Güncelle' : 'Profili Güncelle',
+                'Kaydet': 'Kaydet',
+                'İptal' : 'İptal'
             }
         }
     },
