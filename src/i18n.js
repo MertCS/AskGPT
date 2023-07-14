@@ -34,7 +34,8 @@ i18n.use(initReactI18next).init({
                 'Yükleme başarısız' : 'Load failed',
                 'Profili Güncelle' : 'Edit Profile',
                 'Kaydet': 'Save',
-                'İptal' : 'Cancel'
+                'İptal' : 'Cancel',
+                'Hesabım' : 'My Profile'
             }
         },
         tr: {
@@ -68,7 +69,8 @@ i18n.use(initReactI18next).init({
                 'Yükleme başarısız' : 'Yükleme başarısız',
                 'Profili Güncelle' : 'Profili Güncelle',
                 'Kaydet': 'Kaydet',
-                'İptal' : 'İptal'
+                'İptal' : 'İptal',
+                'Hesabım' : 'Hesabım'
             }
         }
     },

@@ -127,8 +127,8 @@ const onClickSignup = async event => {
 };
 
 const {t} = useTranslation();
-const pendingApiCallSignup = useApiProgress('/api/1.0/users');
-const pendingApiCallLogin = useApiProgress('/api/1.0/auth');
+const pendingApiCallSignup = useApiProgress('post', '/api/1.0/users');
+const pendingApiCallLogin = useApiProgress('post', '/api/1.0/auth');
 
 const pendingApiCall = pendingApiCallLogin || pendingApiCallSignup;
 

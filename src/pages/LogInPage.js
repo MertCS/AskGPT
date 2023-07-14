@@ -42,7 +42,7 @@ const onClickLogIn = async event => {
 
 };
 const buttonEnabled = username && password;
-const pendingApiCall = useApiProgress('/api/1.0/auth')
+const pendingApiCall = useApiProgress('post', '/api/1.0/auth')
 
 return (
   <div className="container d-flex justify-content-center align-items-center">

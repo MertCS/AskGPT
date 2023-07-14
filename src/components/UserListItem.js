@@ -8,7 +8,7 @@ const UserListItem = (props) => {
 
     const{user} = props;
     const {username, image} = user;
-    const pendingApiCall = useApiProgress('/');
+    const pendingApiCall = useApiProgress('get', '/');
 
     if(pendingApiCall){
         return(

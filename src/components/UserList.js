@@ -14,7 +14,7 @@ const UserList = () => {
 
     const [loadFailure, setLoadFailure] = useState(false);
 
-    const pendingApiCall = useApiProgress('/api/1.0/users?page')
+    const pendingApiCall = useApiProgress('get', '/api/1.0/users?page')
 
     useEffect(() => {
         loadUsers();
@@ -56,7 +56,7 @@ const UserList = () => {
 
         return (
             <div className='card'>
-                <h3 className='card-header text-center'><i className='material-icons'>group</i>{t('Diğer Kullanıcılar')}</h3>
+                <h3 className='card-header text-center '>{t('Diğer Kullanıcılar')}<i className='material-icons'>group</i></h3>
                 <div className='list-group list-group-flush'>
                 {users.map(user => (
                     <UserListItem key = {user.username} user = {user}/>

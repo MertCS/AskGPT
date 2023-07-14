@@ -20,10 +20,17 @@ class HomePage extends React.Component {
     };
 
     return (
-      <div className='container'>
+      <div className='container text-center'>
         <div style={{ alignItems: 'center', height: '100vh' }}>
         <div style={{ backgroundColor: 'rgba(58, 58, 58, 1)', padding: '20px', borderRadius: '5px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)' }}>
-          {isLoggedIn ? <UserList/> : (
+          {isLoggedIn ? 
+          <>
+          <UserList/> 
+          <button className="btn btn-primary text-center" onClick={handleButtonClick} style={{ marginTop: '20px' }}>
+              {t('Hemen Sohbet Etmeye Başla!')}
+            </button>
+          </>
+          : (
             <h1 style={{ color: 'white' }}>{t('Giriş Yap veya hesabın yoksa kaydol!')}</h1>
           )}
         </div>
