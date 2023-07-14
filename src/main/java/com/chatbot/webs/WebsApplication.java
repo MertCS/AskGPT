@@ -18,15 +18,18 @@ public class WebsApplication {
 	}
 
 //	@Bean
+//	@Profile("dev")
 //	CommandLineRunner createInitialUsers(UserService userService) {
 //		return (args) -> {
+//			for(int i = 0; i < 25; i++) {
 //				User user = new User();
-//				user.setEmail("email@mail.com");
-//				user.setUserName("user1");
-//				user.setName("user1");
-//				user.setSurname("user1");
-//				user.setPass("P4ssword");
+//				user.setEmail("mail" + i + "@mail.com");
+//				user.setUsername("user" + i);
+//				user.setName("name" + i);
+//				user.setSurname("surname" + i);
+//				user.setPassword("P4ssword");
 //				userService.save(user);
+//			}
 //			};
 //	}
 	

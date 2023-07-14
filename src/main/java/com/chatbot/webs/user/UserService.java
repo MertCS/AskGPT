@@ -1,5 +1,11 @@
 package com.chatbot.webs.user;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Base64;
 import java.util.List;
 
 import org.springframework.data.domain.PageRequest;
@@ -10,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.chatbot.webs.error.NotFoundException;
+import com.chatbot.webs.file.FileService;
 
 @Service
 public class UserService {
@@ -19,9 +26,12 @@ public class UserService {
 	
 	PasswordEncoder passwordEncoder;
 	
-	public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+	FileService fileService;
+	
+	public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, FileService fileService) {
 		this.userRepository = userRepository;
 		this.passwordEncoder = passwordEncoder;
+		this.fileService = fileService;
 	}
 
 	public void save(User user) {
@@ -44,14 +54,20 @@ public class UserService {
 		return inDB;
 	}
 
-	public User updateUser(String username, UserUpdateVM updatedUser) { //username and email verification
+	public User updateUser(String username, UserUpdateVM updatedUser) {
 		User inDB = getByUsername(username);
-		inDB.setEmail(updatedUser.getEmail());
-		inDB.setUsername(updatedUser.getUsername());
 		inDB.setName(updatedUser.getName());
 		inDB.setSurname(updatedUser.getSurname());
+		if(updatedUser.getImage()!=null) {
+			String oldImageName = inDB.getImage();
+			try {
+				String storedFileName = fileService.writeBase64EncodedStringToFile(updatedUser.getImage());
+				inDB.setImage(storedFileName);
+			}catch(IOException e) {
+				e.printStackTrace();
+			}	
+			fileService.deleteFile(oldImageName);
+		}
 		return userRepository.save(inDB);
 	}
-	
-	
 }
