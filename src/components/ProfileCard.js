@@ -53,7 +53,7 @@ const ProfileCard = (props) => {
     if(newImage){
         image = newImage.split(',')[1]
     }
-
+    else{
         const body = {
             name: updatedName,
             surname: updatedSurname,
@@ -65,6 +65,9 @@ const ProfileCard = (props) => {
             setUser(response.data);
             dispatch(updateSuccess(response.data));
         }catch(error){}
+
+    }
+        
         };
 
     const pendingApiCall = useApiProgress('put', '/api/1.0/users/' + username);

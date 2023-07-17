@@ -1,5 +1,6 @@
 import i18n, { setDefaultNamespace } from "i18next";
 import { initReactI18next } from "react-i18next";
+import { register } from "timeago.js";
 
 i18n.use(initReactI18next).init({
     resources: {
@@ -22,6 +23,7 @@ i18n.use(initReactI18next).init({
                 'Hemen Sohbet Etmeye Başla!' : 'Start Chatting!',
                 'Giriş Yap veya hesabın yoksa kaydol!' : 'Log in or sign up if you dont already have an account',
                 'Geçersiz e-posta' : 'Invalid e-mail',
+                'Soyisim uzunluğu 1 ile 255 karakter arasında olmalıdır' : 'Surname size must be between 1 and 255 characters',
                 'İsim uzunluğu 1 ile 255 karakter arasında olmalıdır' : 'Name size must be between 1 and 255 characters',
                 'Şifre uzunluğu 8 ile 255 karakter arasında olmalıdır ve en az 1 büyük harf ve bir rakam içermedilir' : 'Password size must be between 8 and 255 characters and must include at least 1 number and at least 1 capital letter',
                 'Kullanıcı adı uzunluğu 4 ile 255 karakter arasında olmalıdır' : 'User name size must be between 4 and 255 characters',
@@ -35,7 +37,9 @@ i18n.use(initReactI18next).init({
                 'Profili Güncelle' : 'Edit Profile',
                 'Kaydet': 'Save',
                 'İptal' : 'Cancel',
-                'Hesabım' : 'My Profile'
+                'Hesabım' : 'My Profile',
+                'Sohbet kaydı yok!' : 'No chat logs available',
+                'Eski sohbet kayıtlarına git' : 'Load old chat logs'
             }
         },
         tr: {
@@ -57,6 +61,7 @@ i18n.use(initReactI18next).init({
                 'Hemen Sohbet Etmeye Başla!' : 'Hemen Sohbet Etmeye Başla!',
                 'Giriş Yap veya hesabın yoksa kaydol!' : 'Giriş Yap veya hesabın yoksa kaydol!',
                 'Geçersiz e-posta' : 'Geçersiz e-posta',
+                'Soyisim uzunluğu 1 ile 255 karakter arasında olmalıdır' : 'Soyisim uzunluğu 1 ile 255 karakter arasında olmalıdır',
                 'İsim uzunluğu 1 ile 255 karakter arasında olmalıdır' : 'İsim uzunluğu 1 ile 255 karakter arasında olmalıdır',
                 'Şifre uzunluğu 8 ile 255 karakter arasında olmalıdır ve en az 1 büyük harf ve bir rakam içermedilir' : 'Şifre uzunluğu 8 ile 255 karakter arasında olmalıdır ve en az 1 büyük harf ve bir rakam içermedilir',
                 'Kullanıcı adı uzunluğu 4 ile 255 karakter arasında olmalıdır' : 'Kullanıcı adı uzunluğu 4 ile 255 karakter arasında olmalıdır',
@@ -70,7 +75,9 @@ i18n.use(initReactI18next).init({
                 'Profili Güncelle' : 'Profili Güncelle',
                 'Kaydet': 'Kaydet',
                 'İptal' : 'İptal',
-                'Hesabım' : 'Hesabım'
+                'Hesabım' : 'Hesabım',
+                'Sohbet kaydı yok!' : 'Sohbet kaydı yok!',
+                'Eski sohbet kayıtlarına git' : 'Eski sohbet kayıtlarına git'
             }
         }
     },
@@ -86,5 +93,25 @@ i18n.use(initReactI18next).init({
         wait: true
     }
 });
+
+const timeagoTR = (number, index) => {
+    return [
+      ['az önce', 'şimdi'],
+      ['%s saniye önce', '%s saniye içinde'],
+      ['1 dakika önce', '1 dakika içinde'],
+      ['%s dakika önce', '%s dakika içinde'],
+      ['1 saat önce', '1 saat içinde'],
+      ['%s saat önce', '%s saat içinde'],
+      ['1 gün önce', '1 gün içinde'],
+      ['%s gün önce', '%s gün içinde'],
+      ['1 hafta önce', '1 hafta içinde'],
+      ['%s hafta önce', '%s hafta içinde'],
+      ['1 ay önce', '1 ay içinde'],
+      ['%s ay önce', '%s ay içinde'],
+      ['1 yıl önce', '1 yıl içinde'],
+      ['%s yıl önce', '%s yıl içinde'],
+    ][index];
+  }
+  register('tr', timeagoTR);
 
 export default i18n;

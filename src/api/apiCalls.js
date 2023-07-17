@@ -32,3 +32,12 @@ export const setAuthorizationHeader = ({username, password, isLoggedIn}) => {
 export const updateUser = (username, body) => {
     return axios.put(`/api/1.0/users/${username}`, body)
 };
+
+export const postChatLog = chatlog => {
+    return axios.post('/api/1.0/chatlogs', chatlog);
+};
+
+export const getChatlogs = (username, page = 0) => {
+    const path = username ? `api/1.0/users/${username}/chatlogs?page=` : '/api/1.0/chatlogs?page='; 
+    return axios.get(path + page)
+};

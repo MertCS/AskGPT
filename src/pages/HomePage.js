@@ -3,6 +3,8 @@ import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
 import UserList from '../components/UserList';
+import ChatSubmit from '../components/ChatSubmit';
+import ChatlogFeed from '../components/ChatlogFeed';
 //import { Authentication } from '../shared/AuthenticationContext';
 
 class HomePage extends React.Component {
@@ -20,15 +22,28 @@ class HomePage extends React.Component {
     };
 
     return (
-      <div className='container text-center'>
+      <div className='container'>
         <div style={{ alignItems: 'center', height: '100vh' }}>
         <div style={{ backgroundColor: 'rgba(58, 58, 58, 1)', padding: '20px', borderRadius: '5px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)' }}>
           {isLoggedIn ? 
           <>
-          <UserList/> 
-          <button className="btn btn-primary text-center" onClick={handleButtonClick} style={{ marginTop: '20px' }}>
-              {t('Hemen Sohbet Etmeye Başla!')}
-            </button>
+          <div className='row'>
+            <div className='col'>
+              <div className='mb-1'>
+                <ChatSubmit/>
+              </div>
+            <ChatlogFeed/>
+            </div>
+            <div className='col'>
+            <UserList/>
+            </div>
+          </div>
+          <div className='text-center'>
+            <button className="btn btn-primary text-center" onClick={handleButtonClick} style={{ marginTop: '20px' }}>
+                          {t('Hemen Sohbet Etmeye Başla!')}
+                        </button>
+          </div>
+          
           </>
           : (
             <h1 style={{ color: 'white' }}>{t('Giriş Yap veya hesabın yoksa kaydol!')}</h1>

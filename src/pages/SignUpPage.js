@@ -75,7 +75,7 @@ const onChange = event => {
 
     if(form.surname && name === 'surname'){
         if(value.length <= 1 || value.length >= 255){
-          errorsCopy.surname = t('İsim uzunluğu 1 ile 255 karakter arasında olmalıdır');
+          errorsCopy.surname = t('Soyisim uzunluğu 1 ile 255 karakter arasında olmalıdır');
         }
         else{
           errorsCopy.surname = undefined;
@@ -135,7 +135,7 @@ const pendingApiCall = pendingApiCallLogin || pendingApiCallSignup;
 const {email : emailError, name : nameError, surname : surnameError, username : usernameError, password : passwordError} = errors
 
 
-let passCheckError; //Implement
+let passCheckError; 
 if(form.password !== form.passCheck){
   passCheckError = t('Şifreler aynı olmalı');
 }
