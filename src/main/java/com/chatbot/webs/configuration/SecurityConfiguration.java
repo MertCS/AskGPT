@@ -36,9 +36,12 @@ public class SecurityConfiguration {
     
     http.httpBasic().authenticationEntryPoint(new AuthEntryPoint());
 		
+    http.headers().frameOptions().disable();
+    
     http.authorizeHttpRequests()
 			.requestMatchers(HttpMethod.POST, "/api/1.0/auth").authenticated()
 			.requestMatchers(HttpMethod.PUT, "/api/1.0/users/{username}").authenticated()
+			.requestMatchers(HttpMethod.POST, "/api/1.0/chatlogs").authenticated()
 			.and()
 			.authorizeHttpRequests().anyRequest().permitAll();
  

@@ -38,7 +38,7 @@ public class User implements UserDetails{
 
 	@Id
 	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "user_SEQ")
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "user_SEQ")
 	private long id;
 
 	//@NotBlank(message = "{chatbot.constraint.email.NotNull.message}")
